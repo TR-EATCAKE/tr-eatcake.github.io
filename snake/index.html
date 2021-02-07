@@ -1,8 +1,6 @@
 ﻿<html>
 <body id="body" style="background-color: black;">
     <canvas id="canvas" width="860" height="605" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">Tarayıcınız canvası desteklemiyor. :'(</canvas>
-    <script src="https://github.com/john-doherty/swiped-events/blob/master/dist/swiped-events.min.js"></script>
-
     <script>
 
         window.onload = function(){
@@ -59,8 +57,6 @@
             var elmaInt;
             var süreInt;
 	
-            document.addEventListener("swiped-right", function(e){
-})
             document.addEventListener("keydown", function(e){
 
                 if (e.keyCode !== 39 && e.keyCode !== 37 && e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 32) return;
