@@ -1,5 +1,104 @@
 <html>
 <head>
-<title>Nezih Erbay - Ana Sayfa</title>
+<title>Ana Sayfa - Nezih Erbay</title>
+
+<style>
+    @keyframes snakebtn_hover {
+        from {
+            /*background-color: rgb(7, 173, 7);*/
+            border: none;
+            width: 150px;
+            height: 72px;
+            border-radius: 33px;
+            font-size: 24px;
+            left: 200px;
+            top: 60px;
+        }
+        to {
+            /*background-color: rgb(14, 131, 14);*/
+            border: 3px solid white;
+            width: 200px;
+            height: 96px;
+            border-radius: 44px;
+            font-size: 32px;
+            left: 175px;
+            top: 48px;
+        }
+    }
+    @keyframes snakebtn_nothover{
+        from {
+            /*background-color: rgb(14, 131, 14);*/
+            border: 3px solid white;
+            width: 200px;
+            height: 96px;
+            border-radius: 44px;
+            font-size: 32px;
+            left: 175px;
+            top: 48px;
+        }
+        to {
+            /*background-color: rgb(7, 173, 7);*/
+            border: none;
+            width: 150px;
+            height: 72px;
+            border-radius: 33px;
+            font-size: 24px;
+            left: 200px;
+            top: 60px;
+        }
+    }
+    *{
+        font-family: sans-serif;
+    }
+    body{
+        background-color: rgb(20, 20, 20);
+    }
+    .snakebtn{
+        width: 150px;
+        height: 72px;
+        font-size: 24px;
+        color: white;
+        background-color: rgb(14, 131, 14);
+        border: none;
+        border-radius: 33px;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        left: 200px;
+        top: 60px;
+    }
+    .snakebtn:hover{
+        animation-name: snakebtn_hover;
+        animation-duration: 0.3s;
+        /*background-color: rgb(14, 131, 14);*/
+        border: 3px solid white;
+        width: 200px;
+        height: 96px;
+        border-radius: 44px;
+        font-size: 32px;
+        left: 175px;
+        top: 48px;
+    }
+    .snakebtn:not(:hover){
+        animation-name: snakebtn_nothover;
+        animation-duration: 0.3s;
+        /*background-color: rgb(7, 173, 7);*/
+        border:none;
+        width: 150px;
+        height: 72px;
+        border-radius: 33px;
+        font-size: 24px;
+        left: 200px;
+        top: 60px;
+    }
+    
+</style>
 </head>
+<body>
+    <p style="font-size: 25px; color:white">Yakında ayarlıcam bişeler. Şimdilik snake oyunu için:</p>
+
+    <a href="http://neziherbay.ml/snake">
+        <button class="snakebtn">Snake</button>
+    </a>
+</body>
 </html>
