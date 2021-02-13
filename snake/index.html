@@ -44,9 +44,9 @@
                 Dikdörtgen(i, 0, 10, 605, "#232422");
             }
 
-            Dikdörtgen(610, 0, 250, 220, "#232422");
+            Dikdörtgen(610, 0, 250, 250, "#232422");
 
-            Dikdörtgen(620, 10, 230, 200, "#423a3a");
+            Dikdörtgen(620, 10, 230, 230, "#423a3a");
 
             for (var i = 0; i < yılanKonum.length; i++){
                     Dikdörtgen(yılanKonum[i][0], yılanKonum[i][1], 25, 25, "#3fe83c");
@@ -58,7 +58,8 @@
             ctx.fillText("Snake", 735, 50);
 
             ctx.font = "20px Arial";
-            ctx.fillText("Space ile başlat", 735, 195);
+            ctx.fillText("Herhangi bir tuş ile", 735, 175);
+            ctx.fillText("başlat", 735, 200);
 
             Dikdörtgen(730, 70, 25, 25, "#eb3d3d");
 
@@ -77,16 +78,13 @@
 	
             document.addEventListener("keydown", function(e){
 
-                if (e.keyCode !== 39 && e.keyCode !== 37 && e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 32) return;
-
-
                 if (!oyunBaşlama){
 
-                    if (e.keyCode == 32){
                         Başlat();
-                    }
 
                 }else{
+
+                    if (e.keyCode !== 39 && e.keyCode !== 37 && e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 32) return;
 
                     if (e.keyCode == 32) return;
 
@@ -192,9 +190,9 @@
                     Dikdörtgen(i, 0, 10, 605, "#232422");
                 }
 
-                Dikdörtgen(610, 0, 250, 220, "#232422");
+                Dikdörtgen(610, 0, 250, 250, "#232422");
 
-                Dikdörtgen(620, 10, 230, 200, "#423a3a");
+                Dikdörtgen(620, 10, 230, 230, "#423a3a");
 
                 if (elmaKonum.length !== 0){
                     Dikdörtgen(elmaKonum[0], elmaKonum[1], 25, 25, "#eb3d3d")
@@ -287,7 +285,8 @@
 
                 ctx.font = "20px Arial";
                 ctx.fillStyle = "white";
-                ctx.fillText("Space ile yeniden başla", 735, 195)
+                ctx.fillText("Herhangi bir tuş ile", 735, 195);
+                ctx.fillText("yeniden başlat", 735, 220);
             }
 
             function Kaybet(){
@@ -305,7 +304,8 @@
 
                 ctx.font = "20px Arial";
                 ctx.fillStyle = "white";
-                ctx.fillText("Space ile yeniden başla", 735, 195);
+                ctx.fillText("Herhangi bir tuş ile", 735, 195);
+                ctx.fillText("yeniden başlat", 735, 220);
 
             }
 
