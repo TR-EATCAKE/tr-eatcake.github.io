@@ -4,7 +4,6 @@
 <style>
     @keyframes snakebtn_hover {
         from {
-            /*background-color: rgb(7, 173, 7);*/
             border: none;
             width: 150px;
             height: 72px;
@@ -14,7 +13,6 @@
             top: 60px;
         }
         to {
-            /*background-color: rgb(14, 131, 14);*/
             border: 3px solid white;
             width: 200px;
             height: 96px;
@@ -26,7 +24,6 @@
     }
     @keyframes snakebtn_nothover{
         from {
-            /*background-color: rgb(14, 131, 14);*/
             border: 3px solid white;
             width: 200px;
             height: 96px;
@@ -36,7 +33,6 @@
             top: 48px;
         }
         to {
-            /*background-color: rgb(7, 173, 7);*/
             border: none;
             width: 150px;
             height: 72px;
@@ -66,10 +62,10 @@
         left: 200px;
         top: 60px;
     }
-    .snakebtn:hover{
+
+    .hoverAnim {
         animation-name: snakebtn_hover;
         animation-duration: 0.3s;
-        /*background-color: rgb(14, 131, 14);*/
         border: 3px solid white;
         width: 200px;
         height: 96px;
@@ -78,10 +74,10 @@
         left: 175px;
         top: 48px;
     }
-    .snakebtn:not(:hover){
+
+    .unhoverAnim {
         animation-name: snakebtn_nothover;
         animation-duration: 0.3s;
-        /*background-color: rgb(7, 173, 7);*/
         border:none;
         width: 150px;
         height: 72px;
@@ -92,12 +88,28 @@
     }
     
 </style>
+<script>
+    window.onload = function(){
+        var snakeButton = document.getElementById("snake_button");
+
+        snakeButton.addEventListener("mouseenter", function(e){
+            snakeButton.classList.remove("unhoverAnim");
+            snakeButton.classList.add("hoverAnim");
+        });
+
+        snakeButton.addEventListener("mouseleave", function(e){
+                snakeButton.classList.remove("hoverAnim");
+                snakeButton.classList.add("unhoverAnim");
+        });
+    }
+</script>
 </head>
 <body>
     <p style="font-size: 25px; color:white">Yakında ayarlıcam bişeler. Şimdilik snake oyunu için:</p>
 
     <a href="http://neziherbay.ml/snake">
-        <button class="snakebtn">Snake</button>
+        <button id="snake_button" class="snakebtn">Snake</button>
     </a>
+
 </body>
 </html>
