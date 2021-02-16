@@ -1,8 +1,9 @@
 <html>
 <head>
+    <link rel="icon" href="../icon.png">
 <title>Ana Sayfa - Nezih Erbay</title>
 <style>
-    @keyframes snakebtn_hover {
+    @keyframes snakebtn_hover{
         from {
             border: none;
             width: 150px;
@@ -42,6 +43,48 @@
             top: 60px;
         }
     }
+
+    @keyframes testgamebtn_hover{
+        from {
+            border: none;
+            width: 150px;
+            height: 72px;
+            border-radius: 33px;
+            font-size: 24px;
+            left: 200px;
+            top: 160px;
+        }
+        to {
+            border: 3px solid white;
+            width: 200px;
+            height: 96px;
+            border-radius: 44px;
+            font-size: 32px;
+            left: 175px;
+            top: 148px;
+        }
+    }
+    @keyframes testgamebtn_nothover{
+        from {
+            border: 3px solid white;
+            width: 200px;
+            height: 96px;
+            border-radius: 44px;
+            font-size: 32px;
+            left: 175px;
+            top: 148px;
+        }
+        to {
+            border: none;
+            width: 150px;
+            height: 72px;
+            border-radius: 33px;
+            font-size: 24px;
+            left: 200px;
+            top: 160px;
+        }
+    }
+
     *{
         font-family: sans-serif;
     }
@@ -63,7 +106,22 @@
         top: 60px;
     }
 
-    .hoverAnim {
+    .testgamebtn{
+        width: 150px;
+        height: 72px;
+        font-size: 24px;
+        color: white;
+        background-color: rgb(14, 131, 14);
+        border: none;
+        border-radius: 33px;
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        left: 200px;
+        top: 160px;
+    }
+
+    .snakebtn_hoverAnim {
         animation-name: snakebtn_hover;
         animation-duration: 0.3s;
         border: 3px solid white;
@@ -75,7 +133,7 @@
         top: 48px;
     }
 
-    .unhoverAnim {
+    .snakebtn_unhoverAnim {
         animation-name: snakebtn_nothover;
         animation-duration: 0.3s;
         border:none;
@@ -86,20 +144,55 @@
         left: 200px;
         top: 60px;
     }
+
+    .testgamebtn_hoverAnim {
+        animation-name: testgamebtn_hover;
+        animation-duration: 0.3s;
+        border: 3px solid white;
+        width: 200px;
+        height: 96px;
+        border-radius: 44px;
+        font-size: 32px;
+        left: 175px;
+        top: 148px;
+    }
+
+    .testgamebtn_unhoverAnim {
+        animation-name: testgamebtn_nothover;
+        animation-duration: 0.3s;
+        border:none;
+        width: 150px;
+        height: 72px;
+        border-radius: 33px;
+        font-size: 24px;
+        left: 200px;
+        top: 160px;
+    }
     
 </style>
 <script>
     window.onload = function(){
         var snakeButton = document.getElementById("snake_button");
+        var testgameButton = document.getElementById("testgame_button")
 
         snakeButton.addEventListener("mouseenter", function(e){
-            snakeButton.classList.remove("unhoverAnim");
-            snakeButton.classList.add("hoverAnim");
+            snakeButton.classList.remove("snakebtn_unhoverAnim");
+            snakeButton.classList.add("snakebtn_hoverAnim");
         });
 
         snakeButton.addEventListener("mouseleave", function(e){
-                snakeButton.classList.remove("hoverAnim");
-                snakeButton.classList.add("unhoverAnim");
+                snakeButton.classList.remove("snakebtn_hoverAnim");
+                snakeButton.classList.add("snakebtn_unhoverAnim");
+        });
+
+        testgameButton.addEventListener("mouseenter", function(e){
+            testgameButton.classList.remove("testgamebtn_unhoverAnim");
+            testgameButton.classList.add("testgamebtn_hoverAnim");
+        });
+
+        testgameButton.addEventListener("mouseleave", function(e){
+                testgameButton.classList.remove("testgamebtn_hoverAnim");
+                testgameButton.classList.add("testgamebtn_unhoverAnim");
         });
 
     }
@@ -107,10 +200,11 @@
 </head>
 <body>
     
-    <p style="font-size: 25px; color:white">Yakında ayarlıcam bişeler. Şimdilik snake oyunu için:</p>
-
     <a href="http://neziherbay.ml/snake">
         <button id="snake_button" class="snakebtn">Snake</button>
+    </a>
+    <a href="http://neziherbay.ml/test-game">
+        <button id="testgame_button" class="testgamebtn">Test Game</button>
     </a>
 
 </body>
