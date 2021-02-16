@@ -198,7 +198,7 @@ window.onload = function(){
             if (canvas.width/2 - 110 + 220 > mouseX && mouseX > canvas.width/2 - 110 && 390 + 70 > mouseY && mouseY > 390){
                 if (gameStart) return;
                 startGame();
-            }else if (startGame/* && /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)*/){
+            }/*else if (startGame && /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)){
                 tapping = true;
                 if (mouseX >= canvas.width/2 && mouseX < canvas.width){
                     if (stoppedDirection === "right") return;
@@ -212,6 +212,7 @@ window.onload = function(){
                     }
                 }
             }
+            */
         };
 
         function mouseUp(){
