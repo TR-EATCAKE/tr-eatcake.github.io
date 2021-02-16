@@ -177,16 +177,22 @@ window.onload = function(){
             mouseX = e.clientX - rect.left - root.scrollLeft;
             mouseY = e.clientY - rect.top - root.scrollTop;
             if (!gameStart){
-                if (canvas.width/2 - 100 + 200 > mouseX && mouseX > canvas.width/2 - 100 && 390 + 65 > mouseY && mouseY > 390){
-                    drawRect(canvas.width/2 - 100, 390, 200, 65, "#706464");
+                if (canvas.width/2 - 110 + 220 > mouseX && mouseX > canvas.width/2 - 110 && 390 + 70 > mouseY && mouseY > 390){
+                    drawRect(canvas.width/2 - 110, 390, 220, 70, "#706464");
+                    ctx.font = "40px Arial";
+                    ctx.fillStyle = "#b5aeae";
+                    ctx.fillText("BAŞLA", canvas.width/2, 441);
                 }else{
-                    drawRect(canvas.width/2 - 100, 390, 200, 65, "#8b8f89");
+                    drawRect(canvas.width/2 - 110, 390, 220, 70, "#8b8f89");
+                    ctx.font = "40px Arial";
+                    ctx.fillStyle = "black";
+                    ctx.fillText("BAŞLA", canvas.width/2, 441);
                 }
             }
         };
 
         function mouseDown(e){
-            if (canvas.width/2 - 100 + 200 > mouseX && mouseX > canvas.width/2 - 100 && 390 + 65 > mouseY && mouseY > 390){
+            if (canvas.width/2 - 110 + 220 > mouseX && mouseX > canvas.width/2 - 110 && 390 + 70 > mouseY && mouseY > 390){
                 if (gameStart) return;
                 startGame();
             }
@@ -197,7 +203,10 @@ window.onload = function(){
         ctx.textAlign = "center";
         ctx.font = "50px Arial";
         ctx.fillText("Test Oyunu", canvas.width/2, 230);
-        drawRect(canvas.width/2 - 100, 390, 200, 65, "#8b8f89");
+        drawRect(canvas.width/2 - 110, 390, 220, 70, "#8b8f89");
+        ctx.font = "40px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText("BAŞLA", canvas.width/2, 441)
     }
 
     function startGame(){
