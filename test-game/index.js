@@ -18,6 +18,8 @@ var basketY = canvas.height - basketH - 10;
 var basketVX = 0;
 var basketSlippery = 1.5;
 
+var tapping = false;
+
 var stoppedDirection = "none";
 
 var score = 0;
@@ -140,6 +142,7 @@ window.onload = function(){
         document.addEventListener("keyup", keyUp);
         document.addEventListener("mousemove", mouseMove);
         document.addEventListener("mousedown", mouseDown);
+        document.addEventListener("mouseup", mouseUp);
 
         function keyDown(e){
             if (!gameStart) return;
@@ -195,8 +198,36 @@ window.onload = function(){
             if (canvas.width/2 - 110 + 220 > mouseX && mouseX > canvas.width/2 - 110 && 390 + 70 > mouseY && mouseY > 390){
                 if (gameStart) return;
                 startGame();
+            }else if (startGame/* && /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)*/){
+                tapping = true;
+                if (mouseX >= canvas.width/2 && mouseX < canvas.width){
+                    if (stoppedDirection === "right") return;
+                    if (basketVX <= 7){
+                        basketVX += basketSlippery;
+                    }
+                }else if (mouseX < canvas.width/2 && mouseX > 0){
+                    if (stoppedDirection === "left") return;
+                    if (basketVX >= -7){
+                        basketVX -= basketSlippery;
+                    }
+                }
             }
         };
+
+        function mouseUp(){
+
+            tapping = false;
+
+            if (basketVX > 0){
+                basketVX -= basketSlippery;
+            }else if (basketVX < 0){
+                basketVX += basketSlippery;
+            }
+        
+            if (basketVX !== 0) setTimeout(function(){
+                mouseUp();
+            }, 175);
+        }
 
         drawRect(0, 0, canvas.width, canvas.height, "#e33939");
         ctx.fillStyle = "black";
