@@ -10,9 +10,15 @@ var FPS = 60;
 var objectY = -100;
 var objects = [];
 var objectVY = 5;
-
+/*
 var basketW = 112;
 var basketH = 75;
+*/
+var basketW = 144;
+var basketH = 120;
+var basketHitboxL = 30;
+var basketHitboxR = 10;
+var basketHitboxU = 30;
 var basketX = canvas.width/2 - basketW/2;
 var basketY = canvas.height - basketH - 10;
 var basketVX = 0;
@@ -28,7 +34,7 @@ var wrong = 0;
 var gameStart = false;
 
 var basketImg = new Image();
-basketImg.src = "./imgs/basket.png";
+basketImg.src = "./imgs/shopping_cart.png";
 
 var objectImgs = [];
 var loaded = 0;
@@ -49,6 +55,24 @@ var gameObjects = [
         y: objectY,
         width: 34,
         height: 38,
+        kind: "good"
+    },
+    {
+        name: "banana",
+        img: null,
+        x: null,
+        y: objectY,
+        width: null,
+        height: null,
+        kind: "good"
+    },
+    {
+        name: "milk",
+        img: null,
+        x: null,
+        y: objectY,
+        width: null,
+        height: null,
         kind: "good"
     },
     {
@@ -85,8 +109,8 @@ window.onload = function(){
             addObject();
         }
 
-        if (objects[objects.length - 1].y > basketY){
-            if (objects[objects.length - 1].x >= basketX && objects[objects.length - 1].x + objects[objects.length - 1].width <= basketX + basketW){
+        if (objects[objects.length - 1].y > basketY + basketHitboxU){
+            if (objects[objects.length - 1].x >= basketX + basketHitboxL && objects[objects.length - 1].x + objects[objects.length - 1].width <= basketX + basketW - basketHitboxR){
                 if (objects[objects.length - 1].kind === "bad"){
                     wrong ++;
                     console.log("-")
@@ -216,7 +240,7 @@ window.onload = function(){
         };
 
         function mouseUp(){
-
+            /*
             tapping = false;
 
             if (basketVX > 0){
@@ -228,6 +252,7 @@ window.onload = function(){
             if (basketVX !== 0) setTimeout(function(){
                 mouseUp();
             }, 175);
+            */
         }
 
         drawRect(0, 0, canvas.width, canvas.height, "#e33939");
