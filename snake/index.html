@@ -93,13 +93,13 @@
 
                     keypressed = true;
 
-                    if (e.keyCode == 39 && yön !== "sol"){
+                    if ((e.keyCode == 39 || e.keyCode == 68) && yön !== "sol"){
                         yön = "sağ";
-                    }else if (e.keyCode == 37 && yön !== "sağ"){
+                    }else if ((e.keyCode == 37 || e.keyCode == 65) && yön !== "sağ"){
                         yön = "sol";
-                    }else if (e.keyCode == 38 && yön !== "aşağı"){
+                    }else if ((e.keyCode == 38 || e.keyCode == 87) && yön !== "aşağı"){
                         yön = "yukarı";
-                    }else if (e.keyCode == 40 && yön !== "yukarı"){
+                    }else if ((e.keyCode == 40 || e.keyCode == 83) && yön !== "yukarı"){
                         yön = "aşağı";
                     }
 
