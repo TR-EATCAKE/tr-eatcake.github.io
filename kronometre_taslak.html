@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Kronometre</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    <p id="zaman">00:00:00</p>
+    <button onclick="kronometre(0)" id="kronometrebaslat">BAŞLAT</button>
+    <button onclick="kronometre(1)" id="kronometrebitir">SIFIRLA</button>
+</body>
+<script>
+    var interval = null;
+    var sure = [0,0,0]
+    function kronometre(i){
+        if (i==0 && interval == null){
+            interval = setInterval(() => {
+                sure[2] = sure[2] + 1;
+                if (sure[2] == 60){
+                    sure[1] = sure[1] + 1;
+                    sure[2] = 0;
+                    }
+                if (sure[1] == 60){
+                    sure[0] = sure[0] + 1;
+                    sure[1] = 0;
+                }
+                var txt = "";
+                if (sure[0]<10) txt += "0"
+                txt += sure[0] + ":"
+                if (sure[1]<10) txt += "0"
+                txt += sure[1] + ":"
+                if (sure[2]<10) txt += "0"
+                txt += sure[2]
+                document.getElementById("zaman").innerHTML = txt
+            }, 1000);
+            document.getElementById("kronometrebaslat").innerHTML = "DURDUR"
+        }else if (i == 0 && interval != null){
+            clearInterval(interval);
+            interval = null;
+            document.getElementById("kronometrebaslat").innerHTML =  "DEVAM ET"
+        }else if (i==1){
+            clearInterval(interval)
+            interval = null;
+            sure = [0,0,0]
+            document.getElementById("zaman").innerHTML = "00:00:00"
+            document.getElementById("kronometrebaslat").innerHTML = "BAŞLAT"
+        }
+    }
+</script>
+</html>
