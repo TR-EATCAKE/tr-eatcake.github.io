@@ -16,7 +16,7 @@
     </head>
 <body id="body" style="background-color: rgb(20, 20, 20);">
 
-    <a href="http://neziherbay.ml/home"><button class="anasayfabtn"></button></a>
+    <a href="http://tr-eatcake.github.io/home"><button class="anasayfabtn"></button></a>
 
     <canvas id="canvas" width="860" height="605" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">Tarayıcınız canvası desteklemiyor. :'(</canvas>
     
@@ -95,20 +95,20 @@
 
                     keypressed = true;
 
-                    if ((e.keyCode.toString() == "39" || e.keyCode.toString() == "68") && yön !== "sol"){
+                    if ((e.key == "d" || e.key == "ArrowRight") && yön !== "sol"){
                         yön = "sağ";
-                    }else if ((e.keyCode.toString() == "37" || e.keyCode.toString() == "65") && yön !== "sağ"){
+                    }else if ((e.key == "a" || e.key == "ArrowLeft") && yön !== "sağ"){
                         yön = "sol";
-                    }else if ((e.keyCode.toString() == "38" || e.keyCode.toString() == "87") && yön !== "aşağı"){
+                    }else if ((e.key == "w" || e.key == "ArrowUp") && yön !== "aşağı"){
                         yön = "yukarı";
-                    }else if ((e.keyCode.toString() == "40" || e.keyCode.toString() == "83") && yön !== "yukarı"){
+                    }else if ((e.key == "s" || e.key == "ArrowDown") && yön !== "yukarı"){
                         yön = "aşağı";
                     }
 
-                    if (e.keyCode == 39 && (yön === "sağ" || yön === "sol")) return;
-                    if (e.keyCode == 37 && (yön === "sol" || yön === "sağ")) return;
-                    if (e.keyCode == 38 && (yön === "yukarı" || yön === "aşağı")) return;
-                    if (e.keyCode == 40 && (yön === "aşağı" || yön === "yukarı")) return;
+                    if ((e.key == "d" || e.key == "ArrowRight") && (yön === "sağ" || yön === "sol")) return;
+                    if ((e.key == "a" || e.key == "ArrowLeft") && (yön === "sol" || yön === "sağ")) return;
+                    if ((e.key == "w" || e.key == "ArrowUp") && (yön === "yukarı" || yön === "aşağı")) return;
+                    if ((e.key == "s" || e.key == "ArrowDown") && (yön === "aşağı" || yön === "yukarı")) return;
 
                         clearInterval(update);
                         YılanMove();
