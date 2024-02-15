@@ -44,7 +44,7 @@
         }
     }
 
-    @keyframes snakebtn_2_hover{
+    @keyframes testgamebtn_hover{
         from {
             border: none;
             width: 150px;
@@ -64,7 +64,7 @@
             top: 148px;
         }
     }
-    @keyframes snakebtn_2_nothover{
+    @keyframes testgamebtn_nothover{
         from {
             border: 3px solid white;
             width: 200px;
@@ -106,7 +106,7 @@
         top: 60px;
     }
 
-    .snakebtn_2{
+    .testgamebtn{
         width: 150px;
         height: 72px;
         font-size: 24px;
@@ -145,8 +145,8 @@
         top: 60px;
     }
 
-    .snakebtn_2_hoverAnim {
-        animation-name: snakebtn_2_hover;
+    .testgamebtn_hoverAnim {
+        animation-name: testgamebtn_hover;
         animation-duration: 0.3s;
         border: 3px solid white;
         width: 200px;
@@ -157,8 +157,8 @@
         top: 148px;
     }
 
-    .snakebtn_2_unhoverAnim {
-        animation-name: snakebtn_2_nothover;
+    .testgamebtn_unhoverAnim {
+        animation-name: testgamebtn_nothover;
         animation-duration: 0.3s;
         border:none;
         width: 150px;
@@ -186,13 +186,13 @@
         });
 
         // testgameButton.addEventListener("mouseenter", function(e){
-        //     testgameButton.classList.remove("snakebtn_2_unhoverAnim");
-        //     testgameButton.classList.add("snakebtn_2_hoverAnim");
+        //     testgameButton.classList.remove("testgamebtn_unhoverAnim");
+        //     testgameButton.classList.add("testgamebtn_hoverAnim");
         // });
 
         // testgameButton.addEventListener("mouseleave", function(e){
-        //         testgameButton.classList.remove("snakebtn_2_hoverAnim");
-        //         testgameButton.classList.add("snakebtn_2_unhoverAnim");
+        //         testgameButton.classList.remove("testgamebtn_hoverAnim");
+        //         testgameButton.classList.add("testgamebtn_unhoverAnim");
         // });
 
     }
@@ -200,9 +200,8 @@
 </head>
 <body>
     
-    <a href="http://neziherbay.ml/snake">
+    <a href="http://tr-eatcake.github.io/snake">
         <button id="snake_button" class="snakebtn">Snake</button>
-        <button id="snake_button_2" class="snakebtn_2">Snake V2</button>
     </a>
 
 
