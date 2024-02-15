@@ -33,25 +33,25 @@
             var oynanıyor = false;
             var UpdateInt;
 
-            var touchstartx;
-            var touchstarty;
+            var touchstartX;
+            var touchstartY;
 
             function TouchStart(e){
-                touchstartx = e.touches[0].clientX;
-                touchstarty = e.touches[0].clientY;
+                touchstartX = e.changedTouches[0].screenX;
+                touchstartY = e.changedTouches[0].screenY;
             }
 
             function TouchEnd(e){
                 if (!oynanıyor){
-                    touchstartx = null;
-                    touchstarty = null;
+                    touchstartX = null;
+                    touchstartY = null;
                     Baslat();
                 }else{
-                    if (!touchstartx || !touchstarty) return;
-                    var touchendx = e.changedTouches[0].screenX;
-                    var touchendy = e.changedTouches[0].screenY;
-                    var diffX = touchendx - touchstartx;
-                    var diffY = touchendy - touchstarty;
+                    if (!touchstartX || !touchstartY) return;
+                    var touchendX = e.changedTouches[0].screenX;
+                    var touchendY = e.changedTouches[0].screenY;
+                    var diffX = touchendX - touchstartX;
+                    var diffY = touchendY - touchstartY;
                     if (Math.abs(diffX) > Math.abs(diffY)){
                         if (diffX > 0){
                             YönDeğiş(1);
