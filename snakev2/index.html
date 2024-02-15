@@ -13,6 +13,10 @@
             ctx.fillStyle = arkaplan_rengi;
             ctx.fillRect(0,0,800,580);
 
+            document.addEventListener("keydown", KeyDown);
+            document.addEventListener("touchstart", TouchStart);
+            document.addEventListener("touchend", TouchEnd);
+
             var skor = 0;
             var hız = 20;
             var Hız = 10;
@@ -21,6 +25,7 @@
                 [260,240],
                 [280,240]
             ]
+            yılanÇiz();
             var elma = [null, null];
             var yılanS = 20;
             var yılanS = 20;
@@ -28,10 +33,39 @@
             var yön = 1;
             var oynanıyor = false;
             var UpdateInt;
-            
-            yılanÇiz();
 
-            document.addEventListener("keydown", e => {
+            var touchstartx;
+            var touchstarty;
+
+            function TouchStart(e){
+                touchstartx = e.touches[0].clientX;
+                touchstarty = e.touches[0].clientY;
+            }
+
+            function TouchEnd(e){
+                if (!touchstartx || !touchstarty) return;
+                var touchendx = e.touches[0].clientX;
+                var touchendy = e.touches[0].clientY;
+                var diffX = touchendx - touchstartx;
+                var diffY = touchendy - touchstarty;
+                if (Math.abs(diffX) > Math.abs(diffY)){
+                    if (diffX > 0){
+                        yön = 1;
+                    }else{
+                        yön = 3;
+                    }
+                }else{
+                    if (diffY > 0){
+                        yön = 2;
+                    }else{
+                        yön = 4;
+                    }
+                }
+                touchstartx = null;
+                touchstarty = null;
+            }
+
+            function KeyDown(e){
                 key = e.key;
                 if (!oynanıyor){
                     Baslat();
@@ -53,7 +87,8 @@
                         yön=4
                     }
                 }
-            })
+            }
+            
 
             function Baslat(){
                 oynanıyor = true;
