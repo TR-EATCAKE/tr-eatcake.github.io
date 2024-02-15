@@ -48,21 +48,21 @@
                     Baslat();
                 }else{
                     if (!touchstartx || !touchstarty) return;
-                    var touchendx = e.touches[0].clientX;
-                    var touchendy = e.touches[0].clientY;
+                    var touchendx = e.changedTouches[0].screenX;
+                    var touchendy = e.changedTouches[0].screenY;
                     var diffX = touchendx - touchstartx;
                     var diffY = touchendy - touchstarty;
                     if (Math.abs(diffX) > Math.abs(diffY)){
                         if (diffX > 0){
-                            yön = 1;
+                            YönDeğiş(1);
                         }else{
-                            yön = 3;
+                            YönDeğiş(3);
                         }
                     }else{
                         if (diffY > 0){
-                            yön = 2;
+                            YönDeğiş(2);
                         }else{
-                            yön = 4;
+                            YönDeğiş(4);
                         }
                     }
                 }
@@ -74,25 +74,19 @@
                 if (!oynanıyor){
                     Baslat();
                 }else{
-                    if (key == "d" || key == "ArrowRight"){
-                        if (yön == 3) return;
-                        yön=1
-                    }
-                    if (key == "s" || key == "ArrowDown"){
-                        if (yön == 4) return;
-                        yön=2
-                    }
-                    if (key == "a" || key == "ArrowLeft"){
-                        if (yön == 1) return;
-                        yön=3
-                    }
-                    if (key == "w" || key == "ArrowUp"){
-                        if (yön == 2) return;
-                        yön=4
-                    }
+                    if (key == "d" || key == "ArrowRight") YönDeğiş(1);
+                    if (key == "s" || key == "ArrowDown") YönDeğiş(2);
+                    if (key == "a" || key == "ArrowLeft") YönDeğiş(3);
+                    if (key == "w" || key == "ArrowUp") YönDeğiş(4);
                 }
             }
             
+            function YönDeğiş(y){
+                if (y==1 && yön !== 3) yön = 1;
+                if (y==2 && yön !== 4) yön = 2;
+                if (y==3 && yön !== 1) yön = 3;
+                if (y==4 && yön !== 2) yön = 4;
+            }
 
             function Baslat(){
                 oynanıyor = true;
