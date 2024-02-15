@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Snake</title>
-        <style></style>
+        <title>Snake V2</title>
+        <link rel="icon", href="../icon.png">
+        <style>
+            body{
+                background-color: rgb(20,20,20);
+            }
+            #skorcanvas{
+                position: absolute;
+                margin-left: 10px;
+                
+            }
+        </style>
     </head>
     <body>
-        <canvas id="scanvas", width="800", height="580", style="position:absolute;align-self: center;">Error</canvas>
+        <canvas id="scanvas", width="800", height="580"">Error</canvas>
+        <canvas id="skorcanvas", width="250", height="300"></canvas>
         <script>
             var arkaplan_rengi = "#2C292A";
+            var yılan_rengi = "#499C38";
             var canvas = document.getElementById("scanvas");
+            var tcanvas = document.getElementById("skorcanvas");
             var ctx = canvas.getContext("2d");
-            ctx.fillStyle = arkaplan_rengi;
-            ctx.fillRect(0,0,800,580);
+            var tctx = tcanvas.getContext("2d");
+            DikdörtgenÇiz(ctx, [0,0], [800,580], arkaplan_rengi);
+            DikdörtgenÇiz(tctx, [0,0], [250,300], "white");
+            DikdörtgenÇiz(tctx, [2,2], [246,296], arkaplan_rengi);
+
+            DikdörtgenÇiz(ctx,[0,0],[2,canvas.height], "white");
+            DikdörtgenÇiz(ctx,[0,0],[canvas.width,2], "white");
+            DikdörtgenÇiz(ctx,[0,canvas.height-2],[canvas.width,2], "white");
+            DikdörtgenÇiz(ctx,[canvas.width-2,0],[2,canvas.height], "white");
 
             document.addEventListener("keydown", KeyDown);
             document.addEventListener("touchstart", TouchStart);
             document.addEventListener("touchend", TouchEnd);
 
             var skor = 0;
-            var hız = 20;
-            var Hız = 10;
+            var hız = 10;
+            var ivme = 0.25;
             var yılan = [
                 [240,240],
                 [260,240],
@@ -92,13 +112,14 @@
                 oynanıyor = true;
                 UpdateInt = setInterval(() => {
                     Update();
-                }, 1000/Hız);
+                }, 1000/hız);
                 elmaKoy();
             }
 
             function yılanÇiz(){
                 yılan.forEach(pos=>{
-                    DikdörtgenÇiz(pos, kare, "#37BF1C")
+                    DikdörtgenÇiz(ctx, pos, kare, "#3A792D");
+                    DikdörtgenÇiz(ctx, [pos[0]+1,pos[1]+1], [kare[0]-2, kare[1]-2], yılan_rengi);
                 })
             }
 
@@ -113,13 +134,22 @@
                     if (pos[0] == elma[0] && pos[1] == elma[1]) aynıKonum = true;
                 });
                 if (aynıKonum) return elmaKoy();
-                DikdörtgenÇiz(elma, kare, "#F73020")
+                DikdörtgenÇiz(ctx, elma, kare, "#CC2523")
+                DikdörtgenÇiz(ctx, [elma[0]+2,elma[1]+2], [kare[0]-4, kare[1]-4], "#F73020")
             }
 
-            function DikdörtgenÇiz(kord,byt,c){
-                ctx.fillStyle = c;
-                ctx.fillRect(kord[0],kord[1],byt[0],byt[1]);
+            function DikdörtgenÇiz(context, kord, byt,c){
+                context.fillStyle = c;
+                context.fillRect(kord[0],kord[1],byt[0],byt[1]);
             }
+
+            function Yaz(txt, f, a, kord, c){
+                tctx.font = f;
+                tctx.fillStyle = c;
+                tctx.textAlign = a;
+                tctx.fillText(txt, kord[0], kord[1])
+            }
+
             function Update(){
                 var shifted;
                 var pushing;
@@ -143,18 +173,28 @@
                 if (pushing[1]>canvas.height-yılanS) pushing[1] = 0;
                 if (pushing[1]<0) pushing[1] = canvas.height-yılanS;
 
-                if (!(pushing[0] == elma[0] && pushing[1] == elma[1])){
-                    shifted = yılan.shift();
-                    DikdörtgenÇiz(shifted, kare, arkaplan_rengi)
-                }else{
-                    elmaKoy();
+                if (pushing[0] == elma[0] && pushing[1] == elma[1]){
                     skor++;
+                    hız += ivme;
+                    clearInterval(UpdateInt);
+                    UpdateInt = setInterval(() => {
+                        Update();
+                    }, 1000/hız);
+                    elmaKoy();
+                }else{
+                    shifted = yılan.shift();
+                    DikdörtgenÇiz(ctx, shifted, kare, arkaplan_rengi)
                 }
                 yılan.push(pushing);
                 yılanÇiz();
-                Hız = 10 + skor/5;
+                DikdörtgenÇiz(ctx,[0,0],[2,canvas.height], "white");
+                DikdörtgenÇiz(ctx,[0,0],[canvas.width,2], "white");
+                DikdörtgenÇiz(ctx,[0,canvas.height-2],[canvas.width,2], "white");
+                DikdörtgenÇiz(ctx,[canvas.width-2,0],[2,canvas.height], "white");
+                DikdörtgenÇiz(tctx, [2,2], [246,296],arkaplan_rengi);
+                Yaz("Skor: "+skor, "25px Arial", "center", [125,80], "white");
             }
-            
+            Yaz("Skor: "+skor, "25px Arial", "center", [125,80], "white")
             yılanÇiz();
         </script>    
     </body>
