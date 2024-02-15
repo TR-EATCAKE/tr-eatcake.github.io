@@ -43,26 +43,32 @@
             }
 
             function TouchEnd(e){
-                if (!touchstartx || !touchstarty) return;
-                var touchendx = e.touches[0].clientX;
-                var touchendy = e.touches[0].clientY;
-                var diffX = touchendx - touchstartx;
-                var diffY = touchendy - touchstarty;
-                if (Math.abs(diffX) > Math.abs(diffY)){
-                    if (diffX > 0){
-                        yön = 1;
-                    }else{
-                        yön = 3;
-                    }
+                if (!oynanıyor){
+                    touchstartx = null;
+                    touchstarty = null;
+                    Baslat();
                 }else{
-                    if (diffY > 0){
-                        yön = 2;
+                    if (!touchstartx || !touchstarty) return;
+                    var touchendx = e.touches[0].clientX;
+                    var touchendy = e.touches[0].clientY;
+                    var diffX = touchendx - touchstartx;
+                    var diffY = touchendy - touchstarty;
+                    if (Math.abs(diffX) > Math.abs(diffY)){
+                        if (diffX > 0){
+                            yön = 1;
+                        }else{
+                            yön = 3;
+                        }
                     }else{
-                        yön = 4;
+                        if (diffY > 0){
+                            yön = 2;
+                        }else{
+                            yön = 4;
+                        }
                     }
+                    touchstartx = null;
+                    touchstarty = null;
                 }
-                touchstartx = null;
-                touchstarty = null;
             }
 
             function KeyDown(e){
