@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Simulation</title>
+<link rel="icon", href="../icon.png">
 <style>
 	body {
 		background-color: rgb(20, 20, 20);
@@ -9,9 +10,14 @@
 	canvas {
 		border: 3px solid white;
 		border-radius: 10px;
-		position: relative;
+		position: absolute;
+		left: 50px;
+		top: 15px;
 	}
-	button {
+	.b1 {
+		position: relative;
+		left: 900px;
+		top:480px;
 		font-size: 20px;
 		font-family: Arial, Helvetica, sans-serif;
 		width: 150px;
@@ -23,16 +29,30 @@
 		border: 3px solid rgb(9, 109, 9);
 		border-radius: 10px;
 		box-shadow: 0px 5px rgb(9, 109, 9);
+		cursor: pointer;
 	}
-	button:active {
+	.b1:active {
 		background-color: rgb(9, 109, 9);
 	}
+	.anasayfabtn {
+		position: absolute;
+		top: 10px;
+        width: 18px;
+        height: 32px;
+        background-image: url(../imgs/geri_dön.png);
+        background-color: rgb(20, 20, 20);
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>
-<canvas id="canvas" width="800" height="600"></canvas>
-<button id="tracebtn" onclick="tracing()">Yörünge</button>
-<button id="startbtn" onclick="startSimulation()">Başlat</button>
+<a href="http://tr-eatcake.github.io"><button class="anasayfabtn"></button></a>
+<canvas id="canvas" width="800" height="580"></canvas>
+<button id="tracebtn" class="b1" onclick="tracing()">Yörünge</button>
+<button id="startbtn" class="b1" onclick="startSimulation()">Başlat</button>
+
 <script>
 	const G = 0.8
 	const K = 1000
