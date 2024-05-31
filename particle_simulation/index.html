@@ -31,10 +31,10 @@
 </head>
 <body>
 <canvas id="canvas" width="800" height="600"></canvas>
-<button id="tracebtn" onclick="tracing()">Yörünge İzle</button>
-<button id="tracebtn" onclick="startSimulation()">Başlat</button>
+<button id="tracebtn" onclick="tracing()">Yörünge</button>
+<button id="startbtn" onclick="startSimulation()">Başlat</button>
 <script>
-	const G = 0.1
+	const G = 0.8
 	const K = 1000
 
 	const PARTICLE_WIDTH = 10
@@ -43,6 +43,7 @@
 	const FPS = 60
 
 	var updateInterval;
+	var running = false;
 
 	var particles = [];
 	var all_tracing = false;
@@ -207,18 +208,27 @@
 		})
 	}
 	function startSimulation(){
-		updateInterval = setInterval(()=>{
-			Update()
-		},1000/FPS)
+		if (running){
+			running = false;
+			document.getElementById("startbtn").innerHTML = "Başlat";
+			clearInterval(updateInterval);
+		}else{
+			running = true;
+			document.getElementById("startbtn").innerHTML = "Durdur";
+		
+			updateInterval = setInterval(()=>{
+				Update()
+			},1000/FPS)
+		}
 	}
 
 	ctx.fillStyle = "black";
 	ctx.fillRect(0,0,canvas.width,canvas.height);
 	
 	p1 = new Particle("red", 10, new Vector2(50, 100))
-	p2 = new Particle("blue", 3, new Vector2(500,300))
+	p2 = new Particle("blue", 5, new Vector2(500,300))
 	p3 = new Particle("green", 4, new Vector2(700,150))
-	p4 = new Particle("yellow", 3, new Vector2(200,600))
+	p4 = new Particle("yellow", 6, new Vector2(200,500))
 
 	p1.tracing = true;
 	p2.tracing = true;
@@ -231,7 +241,8 @@
 	p4.spawn()	
 	
 	for (i=0;i<10;i++){
-		var p = new Particle("white", 35, new Vector2(Math.random()*canvas.width,Math.random()*canvas.height))
+		var p = new Particle("white", 5, new Vector2(Math.random()*canvas.width,Math.random()*canvas.height))
+		//p.velocity = new Vector2(Math.random(),Math.random())
 		p.spawn()
 	}
 </script>
