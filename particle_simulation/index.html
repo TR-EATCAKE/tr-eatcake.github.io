@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>Simulation</title>
+<style>
+	body {
+		background-color: rgb(20, 20, 20);
+	}
+	canvas {
+		border: 3px solid white;
+		border-radius: 10px;
+		position: relative;
+	}
+	button {
+		font-size: 20px;
+		font-family: Arial, Helvetica, sans-serif;
+		width: 150px;
+		height:60px;
+		background-color: rgb(21, 156, 21);
+		color:white;
+		margin-top: 25px;
+		margin-left: 25px;
+		border: 3px solid rgb(9, 109, 9);
+		border-radius: 10px;
+		box-shadow: 0px 5px rgb(9, 109, 9);
+	}
+	button:active {
+		background-color: rgb(9, 109, 9);
+	}
+</style>
+</head>
+<body>
+<canvas id="canvas" width="800" height="600"></canvas>
+<button id="tracebtn" onclick="tracing()">Yörünge İzle</button>
+<button id="tracebtn" onclick="startSimulation()">Başlat</button>
+<script>
+	const G = 0.1
+	const K = 1000
+
+	const PARTICLE_WIDTH = 10
+	const PARTICLE_HEIGHT = 10
+	const PARTICLE_RADIUS = 5
+	const FPS = 60
+
+	var updateInterval;
+
+	var particles = [];
+	var all_tracing = false;
+    
+	var canvas = document.getElementById("canvas")
+	var ctx = canvas.getContext("2d")
+	
+	class Vector2{
+    	constructor(x=0,y=0){
+    	    this.x = x;
+    	    this.y = y;
+    	}
+    	plus(vector){
+    	    var newv = vPlus(this, vector)
+    	    this.x = newv.x
+    	    this.y = newv.y
+    	    return newv
+    	}
+    	minus(vector){
+    	    var newv = vMinus(this, vector)
+    	    this.x = newv.x
+    	    this.y = newv.y
+    	    return newv
+    	}
+    	scale(n){
+    	    this.x *= n
+    	    this.y *= n
+    	    return this
+    	}
+    	normalize(){
+    	    var y;
+    	    var x;
+    	    if (this.length()==0){
+    	        x = 0;
+    	        y = 0;
+    	    }else{
+    	        x = this.x/this.length();
+    	        y = this.y/this.length();
+    	    }
+    	    this.x = x;
+    	    this.y = y;
+    	    return this
+    	}
+    	length(){
+    	    return Math.hypot(this.x,this.y)
+    	}
+	}
+
+	class Particle{
+		constructor(color="white", mass=1, position=new Vector2(), radius=PARTICLE_RADIUS){
+			this.color = color;
+			this.mass = mass;
+			this.magnitude = 0;
+			this.position = position;
+			this.radius = radius;
+			this.force = new Vector2();
+			this.acceleration = new Vector2();
+			this.velocity = new Vector2();
+			this.tracing = false;
+			this.traces = [];
+			this.colliding = false;
+		}
+		spawn(){
+			particles.push(this)
+			this.draw()
+		}
+		momentum(){
+			return this.velocity.multiply(this.mass)
+		}
+		energyK(){
+			return 1/2*this.mass*this.velocity.length()*this.velocity.length()
+		}
+		update(){
+			this.force = new Vector2();
+			this.colliding = false;
+			particles.forEach(p=>{
+				if (p==this) return;
+				var dx = vMinus(p.position, this.position)
+				var ndx = vNormalized(dx)
+				if (dx.length()<=this.radius+p.radius){
+					this.colliding = true
+					var angleDX = Math.atan2(-dx.y, dx.x)
+					this.velocity.minus(vScaled(ndx, this.velocity.length()*Math.cos(Math.atan2(-this.velocity.y,this.velocity.x)-angleDX)))
+					p.velocity.minus(vScaled(ndx, -p.velocity.length()*Math.cos(Math.atan2(-p.velocity.y,p.velocity.x)+angleDX)))
+				}else{
+					var Gforce = vScaled(ndx, (G*this.mass*p.mass)/(dx.length()*dx.length()))
+					this.force = vPlus(this.force, Gforce);
+					var Mforce = vScaled(ndx, -(K*this.magnitude*p.magnitude)/(dx.length()*dx.length()))
+					this.force = vPlus(this.force, Mforce)
+				}
+			})
+			this.acceleration = vScaled(this.force, 1/this.mass)
+			this.velocity = vPlus(this.velocity, this.acceleration)
+			this.position = vPlus(this.position, this.velocity)
+			if (this.tracing){
+				this.traces.push(this.position)
+			}
+			/*
+			if (this.position.x >= canvas.width-PARTICLE_WIDTH){
+				this.velocity.x *= -1
+				this.position.x = canvas.width-PARTICLE_WIDTH
+			}
+			if (this.position.x <= 0){
+				this.velocity.x*=-1
+				this.position.x = 0
+			}
+			if (this.position.y>=canvas.height-PARTICLE_HEIGHT){
+				this.velocity.y*=-1
+				this.position.y = canvas.height-PARTICLE_HEIGHT
+			}
+			if (this.position.y<=0){
+				this.velocity.y*=-1
+				this.position.y=0
+			}
+			KENARDAN SEKME KODU */
+		}
+		draw(){
+			ctx.fillStyle = this.color;
+			if (this.tracing && all_tracing){
+				this.traces.forEach(trace=>{
+					ctx.beginPath()
+					ctx.arc(trace.x, trace.y, 1,5,0,2*Math.PI)
+					ctx.fill()
+				})
+			}
+			ctx.beginPath();
+			ctx.arc(this.position.x, this.position.y,this.radius,0,2*Math.PI);
+			ctx.fill()
+		}
+	}
+
+	function tracing(){
+		all_tracing = !all_tracing
+	}
+
+	function vPlus(v1, v2){
+		return new Vector2(v1.x+v2.x, v1.y+v2.y)
+	}
+
+	function vMinus(v1, v2){
+		return new Vector2(v1.x-v2.x, v1.y-v2.y)
+	}
+
+	function vScaled(v, n){
+		return new Vector2(v.x*n,v.y*n)
+	}
+
+	function vNormalized(v){
+		if (v.length()==0){
+			return new Vector2();
+		}else{
+			return new Vector2(v.x/v.length(),v.y/v.length());
+		}
+	}
+
+	function Update(){
+		ctx.fillStyle = "black";
+		ctx.fillRect(0,0,canvas.width,canvas.height);
+		particles.forEach(p=>{
+			p.update()
+			p.draw()
+		})
+	}
+	function startSimulation(){
+		updateInterval = setInterval(()=>{
+			Update()
+		},1000/FPS)
+	}
+
+	ctx.fillStyle = "black";
+	ctx.fillRect(0,0,canvas.width,canvas.height);
+	
+	p1 = new Particle("red", 10, new Vector2(50, 100))
+	p2 = new Particle("blue", 3, new Vector2(500,300))
+	p3 = new Particle("green", 4, new Vector2(700,150))
+	p4 = new Particle("yellow", 3, new Vector2(200,600))
+
+	p1.tracing = true;
+	p2.tracing = true;
+	p3.tracing = true;
+	p4.tracing = true;
+
+	p1.spawn()
+	p2.spawn()
+	p3.spawn()
+	p4.spawn()	
+	
+	for (i=0;i<10;i++){
+		var p = new Particle("white", 35, new Vector2(Math.random()*canvas.width,Math.random()*canvas.height))
+		p.spawn()
+	}
+</script>
+</body>
+</html>
