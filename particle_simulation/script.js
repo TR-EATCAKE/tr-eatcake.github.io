@@ -1,10 +1,11 @@
-const G = 0.1
-const K = 1000
+const G = 0.1;
+const K = 1000;
 
-const PARTICLE_WIDTH = 10
-const PARTICLE_HEIGHT = 10
-const PARTICLE_RADIUS = 5
-const FPS = 60
+const PARTICLE_WIDTH = 10;
+const PARTICLE_HEIGHT = 10;
+const PARTICLE_RADIUS = 5;
+const TRACE_RADIUS = 1.5;
+const FPS = 60;
 
 var updateInterval;
 var running = false;
@@ -124,8 +125,9 @@ class Particle{
 
 		if (this.tracing){
 			if (this.trace_cooldown == 0){
+				this.trace_cooldown = FPS/5;
+				if (this.position.x > canvas.width+this.radius || this.position.x < -this.radius || this.position.y > canvas.height+this.radius || this.position.y < -this.radius) return;
 				this.traces.push(this.position)
-				this.trace_cooldown = FPS/2;
 			}else this.trace_cooldown --;
 		}
 
@@ -136,7 +138,7 @@ class Particle{
 		if (this.tracing && all_tracing){
 			this.traces.forEach(trace=>{
 				ctx.beginPath()
-				ctx.arc(trace.x, trace.y, 1.5,0,2*Math.PI)
+				ctx.arc(trace.x, trace.y, TRACE_RADIUS,0,2*Math.PI)
 				ctx.fill()
 			})
 		}
@@ -150,14 +152,15 @@ class Particle{
 function spawnSingle(color, mass, x, y, vx, vy, tracing){
 	var p = new Particle(color, parseFloat(mass), new Vector2(parseFloat(x),parseFloat(y)));
 	p.velocity = new Vector2(parseFloat(vx), parseFloat(vy));
-	if (tracing) p.tracing = true;
+	p.tracing = tracing;
 	p.spawn();
 	total_particle_count.innerHTML = "Toplam Parçacık Sayısı: " + particles.length
 }
 
-function spawnMultiple(color, mass, count, randomvelocity){
+function spawnMultiple(color, mass, count, tracing, randomvelocity){
 	for (i=0;i<parseInt(count);i++){
 		var p = new Particle(color, parseFloat(mass), new Vector2(Math.random()*canvas.width,Math.random()*canvas.height))
+		p.tracing = tracing;
 		if (randomvelocity){
 			p.velocity = new Vector2(Math.random(),Math.random());
 		}
