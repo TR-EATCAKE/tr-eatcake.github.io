@@ -94,19 +94,32 @@ class Particle{
 		this.trace_cooldown = 0;
 		this.collisions = new Set();
 	}
+	get is_colliding(){
+		return (this.collisions.size != 0);
+	}
+	get momentum(){
+		return this.velocity.scale(this.mass);
+	}
+	get kineticEnergy(){
+		return 1/2*this.mass*this.velocity.length*this.velocity.length;
+	}
 	spawn(){
-		particles.push(this)
-		this.draw()
-	}
-	momentum(){
-		return this.velocity.multiply(this.mass)
-	}
-	energyK(){
-		return 1/2*this.mass*this.velocity.length()*this.velocity.length()
+		particles.push(this);
+		this.draw();
 	}
 	update(){
 		this.acceleration = this.force.scale(1/this.mass);
 		this.velocity = this.velocity.plus(this.acceleration);
+
+		if (this.is_colliding){
+			for (var c of this.collisions){
+				var dx = particles[c].position.minus(this.position);
+				var angleDX = Math.atan2(dx.y, dx.x);
+				var angleVEL = Math.atan2(this.velocity.y, this.velocity.x);
+				var angleBETWEEN = angleDX-angleVEL;
+				this.velocity = this.velocity.minus(dx.normalize().scale(this.velocity.length*Math.cos(angleBETWEEN)).scale(/*Math.floor(Math.random()**/2/*)+1*/))
+			}
+		}
 		this.position = this.position.plus(this.velocity);
 
 		if (this.tracing){
@@ -117,62 +130,7 @@ class Particle{
 		}
 
 		this.force = new Vector2();
-
-		///this.force = new Vector2();
-		///this.colliding = false;
-		///var sets = [];
-		///for (var i = 0; i<particles.length; i++){
-		///	var start_i = i+1;
-		///	for (var j = start_i; j<particles.length; j++){
-		///		var p1 = particles[i];
-		///		var p2 = particles[j];
-		///		var rel_pos1 = p1.position.minus(p2.position);
-		///		var rel_pos2 = p2.position.minus(p1.position);
-		///		var distance = rel_pos1.length();
-		///		var gravityForce;
-		///	}
-		///}
-		////particles.forEach(p=>{
-		////	if (p==this) return;
-		////	var dx = vMinus(p.position, this.position)
-		////	var ndx = vNormalized(dx)
-		////	if (dx.length()<=this.radius+p.radius){
-		////		this.colliding = true
-		////		var angleDX = Math.atan2(-dx.y, dx.x)
-		////		this.velocity.minus(vScaled(ndx, this.velocity.length()*Math.cos(Math.atan2(-this.velocity.y,this.velocity.x)-angleDX)))
-		////		p.velocity.minus(vScaled(ndx, -p.velocity.length()*Math.cos(Math.atan2(-p.velocity.y,p.velocity.x)+angleDX)))
-		////	}else{
-		////		var Gforce = vScaled(ndx, (G*this.mass*p.mass)/(dx.length()*dx.length()))
-		////		this.force = vPlus(this.force, Gforce);
-		////		var Mforce = vScaled(ndx, -(K*this.magnitude*p.magnitude)/(dx.length()*dx.length()))
-		////		this.force = vPlus(this.force, Mforce)
-		////	}
-		////})
-		////this.acceleration = vScaled(this.force, 1/this.mass)
-		////this.velocity = vPlus(this.velocity, this.acceleration)
-		////this.position = vPlus(this.position, this.velocity)
-		////if (this.tracing){
-		////	this.traces.push(this.position)
-		}
-		/*
-		if (this.position.x >= canvas.width-PARTICLE_WIDTH){
-			this.velocity.x *= -1
-			this.position.x = canvas.width-PARTICLE_WIDTH
-		}
-		if (this.position.x <= 0){
-			this.velocity.x*=-1
-			this.position.x = 0
-		}
-		if (this.position.y>=canvas.height-PARTICLE_HEIGHT){
-			this.velocity.y*=-1
-			this.position.y = canvas.height-PARTICLE_HEIGHT
-		}
-		if (this.position.y<=0){
-			this.velocity.y*=-1
-			this.position.y=0
-		}
-		KENARDAN SEKME KODU */
-	////}
+	}
 	draw(){
 		ctx.fillStyle = this.color;
 		if (this.tracing && all_tracing){
@@ -182,6 +140,7 @@ class Particle{
 				ctx.fill()
 			})
 		}
+		if (this.position.x > canvas.width+this.radius || this.position.x < -this.radius || this.position.y > canvas.height+this.radius || this.position.y < -this.radius) return;
 		ctx.beginPath();
 		ctx.arc(this.position.x, this.position.y,this.radius,0,2*Math.PI);
 		ctx.fill()
