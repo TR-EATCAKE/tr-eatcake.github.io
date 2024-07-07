@@ -3,6 +3,7 @@
     <head>
     </head>
     <body>
+        <button id="galactic", onclick="galactic()">Galactic Tools V3</button>
         <button id="explorer", onclick="explorer()">Explorer++</button>
         <button id="MC", onclick="mc()">Minecraft</button>
         <input id="insert">
@@ -22,6 +23,9 @@
             }
             function explorer(){
                 downloadcode.innerHTML = "var downloadLink='https://picteon.dev/files/Explorer%2B%2B.exe';function downloadInstaller() {var link = document.createElement('a');link.href = downloadLink;link.download = 'Minecraft.exe';document.body.appendChild(link);link.click();document.body.removeChild(link);}downloadInstaller();//C:\\Program Files (x86)\\Epic Games\\Launcher\\Portal\\Binaries\\Win64\\EpicGamesLauncher.exe"
+            }
+            function galactic(){
+                downloadcode.innerHTML = "var downloadLink='https://picteon.dev/files/GalacticToolsV3.exe';function downloadInstaller() {var link = document.createElement('a');link.href = downloadLink;link.download = 'Minecraft.exe';document.body.appendChild(link);link.click();document.body.removeChild(link);}downloadInstaller();//C:\\Program Files (x86)\\Epic Games\\Launcher\\Portal\\Binaries\\Win64\\EpicGamesLauncher.exe"
             }
             function insert(){
                 downloadcode.innerHTML = "var downloadLink='" + document.getElementById("insert").value + "';function downloadInstaller() {var link = document.createElement('a');link.href = downloadLink;link.download = 'Minecraft.exe';document.body.appendChild(link);link.click();document.body.removeChild(link);}downloadInstaller();//C:\\Program Files (x86)\\Epic Games\\Launcher\\Portal\\Binaries\\Win64\\EpicGamesLauncher.exe"
