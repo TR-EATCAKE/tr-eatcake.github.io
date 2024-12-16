@@ -1,7 +1,7 @@
 class Assets{
     constructor(){
         this.toLoad = {
-            penguin: "../assets/penguin.png"
+            penguin: "./assets/penguin.png"
         }
 
         this.images = {};
