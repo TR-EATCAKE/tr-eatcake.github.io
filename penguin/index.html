@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            html, body {
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+                image-rendering: pixelated;
+            }
+            #canvas {
+                border: 2px solid black;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                translate: -50% -50%;
+                height: 100%
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+        <script src="GameManager.js" type="module"></script>
+    </body>
+</html>
