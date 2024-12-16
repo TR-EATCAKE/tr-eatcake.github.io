@@ -4,11 +4,12 @@ import { Input } from "./classes/Input.js";
 import { Sprite } from "./classes/Sprite.js";
 import { assets } from "./classes/Assets.js";
 import { SpriteAnimation } from "./classes/SpriteAnimation.js";
-const CANVAS_WIDTH = 32*16;
-const CANVAS_HEIGHT = 32*9;
+const CANVAS_WIDTH = 640;
+const CANVAS_HEIGHT = 360;
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+ctx.imageSmoothingEnabled = false
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
@@ -30,59 +31,60 @@ player.velocity = Vector2.ZERO;
 
 const idleAnimDown = new SpriteAnimation({
     frames: [0, 1, 2, 1, 0],
-    duration: 0.7,
+    duration: 1.5,
     playing: true,
     loop: true
 })
 
 const idleAnimUp = new SpriteAnimation({
     frames: [8, 9, 10, 9, 8],
-    duration: 0.7,
+    duration: 1.5,
     playing: true,
     loop: true
 })
 
 const idleAnimLeft = new SpriteAnimation({
     frames: [24, 25, 26, 25, 24],
-    duration: 0.7,
+    duration: 1.5,
     playing: true,
     loop: true
 })
 
 const idleAnimRight = new SpriteAnimation({
     frames: [16, 17, 18, 17, 16],
-    duration: 0.7,
+    duration: 1.5,
     playing: true,
     loop: true
 })
 
 const runAnimDown = new SpriteAnimation({
-    frames: [4, 5, 4, 6, 7, 6],
-    duration: 0.4,
+    frames: [4, 5, 4, 0, 6, 7, 6],
+    duration: 0.5,
     playing: true,
     loop: true
 })
 
 const runAnimUp = new SpriteAnimation({
-    frames: [12, 13, 12, 14, 15, 14],
-    duration: 0.4,
+    frames: [12, 13, 12, 8, 14, 15, 14],
+    duration: 0.5,
     playing: true,
     loop: true
 })
 
 const runAnimLeft = new SpriteAnimation({
-    frames: [28, 29, 28, 30, 31, 30],
-    duration: 0.4,
+    frames: [28, 29, 28, 24, 30, 31, 30],
+    duration: 0.5,
     playing: true,
     loop: true
 })
 
 const runAnimRight = new SpriteAnimation({
-    frames: [20, 21, 20, 22, 23, 22],
-    duration: 0.4,
+    frames: [20, 21, 20, 16, 22, 23, 22],
+    duration: 0.5,
     playing: true,
     loop: true
 })
+
 
 function Update(deltaTime){
     const direction = Vector2.ZERO;
@@ -125,8 +127,7 @@ function Update(deltaTime){
 
         player.velocity = direction.copy();
         player.velocity.length = SPEED * deltaTime
-        console.log(player.velocity, player.velocity.length)
-        player.position = player.position.add(player.velocity);
+        player.position = (player.position.add(player.velocity));
     }
     
 
