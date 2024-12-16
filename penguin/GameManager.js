@@ -12,7 +12,7 @@ const ctx = canvas.getContext("2d");
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
-const SPEED = 200;
+const SPEED = 150;
 
 const input = new Input(canvas);
 const camera = new Camera(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -123,7 +123,9 @@ function Update(deltaTime){
         //    else player.setAnimation(runAnimLeft);
         //}
 
-        player.velocity = direction.multiply(SPEED * deltaTime);
+        player.velocity = direction.copy();
+        player.velocity.length = SPEED * deltaTime
+        console.log(player.velocity, player.velocity.length)
         player.position = player.position.add(player.velocity);
     }
     
