@@ -12,7 +12,7 @@ const ctx = canvas.getContext("2d");
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
-const SPEED = 150;
+const SPEED = 125;
 
 const input = new Input(canvas);
 const camera = new Camera(CANVAS_WIDTH, CANVAS_HEIGHT);
