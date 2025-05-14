@@ -11,6 +11,7 @@ var updateInterval;
 var running = false;
 
 var particles = [];
+var collisions = [];
 var all_tracing = false;
 
 var canvas = document.getElementById("canvas")
@@ -48,35 +49,55 @@ m_count_slider.oninput = function() {
 var total_particle_count = document.getElementById("total_particle_count");
 total_particle_count.innerHTML += particles.length
 
+
 class Vector2{
 	constructor(x=0,y=0){
 	    this.x = x;
 	    this.y = y;
 	}
-	plus(vector){
-	    return new Vector2(this.x+vector.x,this.y+vector.y)
-	}
-	minus(vector){
-	    return new Vector2(this.x-vector.x, this.y-vector.y)
-	}
-	scale(n){
-		return new Vector2(this.x*n, this.y*n)
-	}
+
 	normalize(){
-	    if (this == new Vector2()){
-			return this;
-	    }else{
-            return new Vector2(this.x/this.length, this.y/this.length);
-	    }
+	    if (this.length == 0) return;
+        this.x /= this.length;
+        this.y /= this.length;
 	}
+
+	normalized(){
+		if (this.length == 0) return new Vector2(0,0);
+		return new Vector2(this.x/this.length, this.y/this.length);
+	}
+
+	scale(n){
+		this.x *= n;
+		this.y *= n;
+	}
+
+	scaled(n){
+		return new Vector2(this.x*n, this.y*n);
+	}
+
+	static add(v1, v2){
+		return new Vector2(v1.x + v2.x, v1.y + v2.y);
+	}
+	static subtract(v1, v2){
+		return new Vector2(v1.x - v2.x, v1.y - v2.y);
+	}
+	static multiply(v, n){
+		return new Vector2(v.x * n, v.y * n);
+	}
+	static dot(v1, v2){
+		return v1.x * v2.x + v1.y * v2.y;
+	}
+
 	get length(){
 	    return Math.hypot(this.x,this.y)
 	}
+
 	set length(len){
-		newVector = this.normalize().scale(len);
-		this.x = newVector.x;
-		this.y = newVector.y;
-	}
+		this.normalize();
+		this.x *= len;
+		this.y *= len;
+	}	
 }
 
 class Particle{
@@ -109,19 +130,25 @@ class Particle{
 		this.draw();
 	}
 	update(){
-		this.acceleration = this.force.scale(1/this.mass);
-		this.velocity = this.velocity.plus(this.acceleration);
+		this.acceleration = this.force.scaled(1/this.mass);
+		this.velocity = Vector2.add(this.velocity, this.acceleration);
+		this.position = Vector2.add(this.position, this.velocity);
 
 		if (this.is_colliding){
 			for (var c of this.collisions){
-				var dx = particles[c].position.minus(this.position);
-				var angleDX = Math.atan2(dx.y, dx.x);
-				var angleVEL = Math.atan2(this.velocity.y, this.velocity.x);
-				var angleBETWEEN = angleDX-angleVEL;
-				this.velocity = this.velocity.minus(dx.normalize().scale(this.velocity.length*Math.cos(angleBETWEEN)).scale(/*Math.floor(Math.random()**/2/*)+1*/))
+				var distance = Vector2.subtract(this.position, particles[c].position);
+				var overlap = this.radius + particles[c].radius - distance.length;
+				this.position = Vector2.add(this.position, distance.normalized().scaled(overlap/2));
+				particles[c].position = Vector2.add(particles[c].position, distance.normalized().scaled(-overlap/2));
+				distance = Vector2.subtract(this.position, particles[c].position);
+				var u1 = 2 * particles[c].mass * Vector2.dot(Vector2.subtract(particles[c].velocity, this.velocity), distance) / ((this.mass + particles[c].mass) * distance.length * distance.length);
+				var u2 = 2 * this.mass * Vector2.dot(Vector2.subtract(this.velocity, particles[c].velocity), distance) / ((this.mass + particles[c].mass) * distance.length * distance.length);
+				this.velocity = Vector2.add(this.velocity, distance.scaled(u1));
+				particles[c].velocity = Vector2.add(particles[c].velocity, distance.scaled(u2));
+				this.collisions.delete(particles[c].id);
+				particles[c].collisions.delete(this.id);
 			}
 		}
-		this.position = this.position.plus(this.velocity);
 
 		if (this.tracing){
 			if (this.trace_cooldown == 0){
@@ -210,26 +237,22 @@ function Update(){
 	ctx.fillStyle = "black";
 	ctx.fillRect(0,0,canvas.width,canvas.height);
 	for (var i = 0; i<particles.length; i++){
-			var start_i = i+1;
-			for (var j = start_i; j<particles.length; j++){
+			for (var j = i+1; j<particles.length; j++){
 				var p1 = particles[i];
 				var p2 = particles[j];
 
-				var rel_pos1 = p1.position.minus(p2.position);
-				var rel_pos2 = p2.position.minus(p1.position);
+				var rel_pos1 = Vector2.subtract(p1.position, p2.position);
+				var rel_pos2 = Vector2.subtract(p2.position, p1.position);
 				var distance = rel_pos1.length;
 
-				if (distance <= p1.radius+p2.radius){
+				if (distance < p1.radius+p2.radius){
 					p1.collisions.add(p2.id);
 					p2.collisions.add(p1.id);
-				}else{
-					p1.collisions.delete(p2.id);
-					p2.collisions.delete(p1.id);
 				}
 				var gravity_scale = (G*p1.mass*p2.mass)/(distance*distance);
 				if (!p1.collisions.has(p2.id)){
-					p1.force = p1.force.plus(rel_pos2.normalize().scale(gravity_scale));
-					p2.force = p2.force.plus(rel_pos1.normalize().scale(gravity_scale));
+					p1.force = Vector2.add(p1.force, rel_pos2.normalized().scaled(gravity_scale));
+					p2.force = Vector2.add(p2.force, rel_pos1.normalized().scaled(gravity_scale));
 				}
 			}
 			particles[i].update();

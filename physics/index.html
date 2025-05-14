@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Simulation</title>
+		<link rel="icon", href="../icon.png">
+		<style>
+			body {
+				background-color: rgb(20, 20, 20);
+			}
+			p {
+				color: white;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size:16px;
+			}
+			canvas {
+				position: absolute;
+				left:35px;
+				border: 3px solid white;
+				border-radius: 10px;
+			}
+			.b1 {
+				position: relative;
+				font-size: 20px;
+				font-family: Arial, Helvetica, sans-serif;
+				width: 200px;
+				height:60px;
+				background-color: rgb(21, 156, 21);
+				color:white;
+				border: 3px solid rgb(9, 109, 9);
+				border-radius: 10px;
+				box-shadow: 0px 5px rgb(9, 109, 9);
+				cursor: pointer;
+			}
+			.b1:hover {
+				background-color: rgb(21, 145, 21);
+			}
+			.b1:active {
+				background-color: rgb(9, 109, 9);
+			}
+			.anasayfabtn {
+				position:absolute;
+				top: 10px;
+        		width: 18px;
+        		height: 32px;
+        		background-image: url(../imgs/geri_dön.png);
+        		background-color: rgb(20, 20, 20);
+        		border: none;
+        		outline: none;
+        		cursor: pointer;
+    		}
+			.d1 {
+				position: absolute;
+				padding: 10px;
+				border:3px solid white;
+				border-radius: 10px;
+				background-color: black;
+			}
+			.numinput {
+				width:50px;
+			}
+			.colorinput {
+				width:25px;
+				height:25px;
+			}
+			.rangeinput {
+				width: 200px;
+			}
+			#singlespawndiv {
+				width:200px;
+				height:370px;
+				left:850px;
+			}
+			#multiplespawndiv {
+				width:200px;
+				height:370px;
+				left:1085px;
+			}
+			#mainbuttonsdiv {
+				left:850px;
+				top:410px;
+				width:435px;
+				height:140px;
+			}
+		</style>
+	</head>
+	<body>
+		<a href="http://tr-eatcake.github.io"><button class="anasayfabtn"></button></a>
+		<canvas id="canvas", width="800", height="600"></canvas>
+		<script src="./index.js", type="module"></script>
+	</body>
+</html>
