@@ -37,6 +37,9 @@ export class Vector2 {
     dot(v) {
         return this.x * v.x + this.y * v.y;
     }
+    toString() {
+        return `(${this.x}, ${this.y})`;
+    }
     static add(v1, v2) {
         return new Vector2(v1.x + v2.x, v1.y + v2.y);
     }

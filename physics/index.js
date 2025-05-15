@@ -1,21 +1,37 @@
+import { PhysicsManager } from "./classes/PhysicsManager.js";
+import { PhysicsObject } from "./classes/PhysicsObject.js";
 import { Vector2 } from "./classes/Vector2.js";
+import { Shape, Circle, Rectangle } from "./classes/Shapes.js";
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-let lastTime = performance.now();
 
+for (let i = 0; i < 100; i++) {
+    const radius = Math.random() * 20 + 10;
+    const x = Math.random() * (canvas.width - 2*radius) + radius;
+    const y = Math.random() * (canvas.height - 2*radius) + radius;
+    const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    const circle = new PhysicsObject(new Vector2(x, y), 1, new Circle(radius, color));
+    circle.velocity = new Vector2(Math.random() * 400 - 100, Math.random() * 400 - 100);
+    PhysicsManager.addObject(circle);
+}
+
+let lastTime = performance.now()
 function loop(currentTime) {
     const deltaTime = (currentTime - lastTime) / 1000; // deltaTime in seconds
+    
     lastTime = currentTime;
+    PhysicsManager.update(deltaTime);
 
-    // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-
-    console.log(deltaTime);
+    for (let i = 0; i < PhysicsManager.objects.length; i++) {
+        const object = PhysicsManager.objects[i];
+        object.draw(ctx);
+    }
 
     requestAnimationFrame(loop);
 }
-
-//requestAnimationFrame(loop);
+requestAnimationFrame(loop);
+    
