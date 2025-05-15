@@ -7,8 +7,8 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 
-for (let i = 0; i < 100; i++) {
-    const radius = Math.random() * 20 + 10;
+for (let i = 0; i < 150; i++) {
+    const radius = Math.random() * 10 + 10;
     const x = Math.random() * (canvas.width - 2*radius) + radius;
     const y = Math.random() * (canvas.height - 2*radius) + radius;
     const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
@@ -23,6 +23,11 @@ function loop(currentTime) {
     
     lastTime = currentTime;
     PhysicsManager.update(deltaTime);
+
+    console.log(
+        "FPS: " + Math.round(1 / deltaTime) +
+        "\nTotal Kinetic Energy: " + PhysicsManager.totalKineticEnergy
+    );
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 

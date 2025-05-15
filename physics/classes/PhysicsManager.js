@@ -4,6 +4,7 @@ import { Shape, Circle, Rectangle } from "./Shapes.js";
 export class PhysicsManager{
     
     static objects = [];
+    static totalKineticEnergy = 0;
 
     static addObject(object){
         this.objects.push(object);
@@ -16,7 +17,7 @@ export class PhysicsManager{
     }
 
     static update(deltaTime){
-        var totalKinetic = 0;
+        this.totalKineticEnergy = 0;
         for (let i = 0; i < this.objects.length; i++) {
             const objectA = this.objects[i];
             for (let j = i + 1; j < this.objects.length; j++) {
@@ -42,10 +43,10 @@ export class PhysicsManager{
                         objectA.velocity.y *= -1;
                     }
                 }
-            totalKinetic += objectA.velocity.magnitude * objectA.velocity.magnitude * objectA.mass / 2;
+            this.totalKineticEnergy += objectA.velocity.magnitude * objectA.velocity.magnitude * objectA.mass / 2;
             objectA.update(deltaTime);
         }
-        //console.log("Total Kinetic Energy: " + totalKinetic);
+        
     }
 
     static checkCollision(objectA, objectB){
