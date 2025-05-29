@@ -1,3 +1,4 @@
+import { Vector2 } from "./Vector2.js";
 export class Shape{
     constructor(type, color="white"){
         this.color = color;
@@ -12,6 +13,10 @@ export class Circle extends Shape{
         super(Shape.CIRCLE, color);
         this.radius = radius;
     }
+    get copy(){
+        return new Circle(this.radius, this.color);
+    }
+    
 
     draw(ctx) {
         ctx.fillStyle = this.color;
@@ -27,6 +32,10 @@ export class Rectangle extends Shape{
         super(Shape.RECTANGLE, color);
         this.width = size.x;
         this.height = size.y;
+    }
+
+    get copy(){
+        return new Rectangle(new Vector2(this.width, this.height), this.color);
     }
 
     draw(ctx) {

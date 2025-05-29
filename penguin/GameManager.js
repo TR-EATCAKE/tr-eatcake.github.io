@@ -13,7 +13,7 @@ ctx.imageSmoothingEnabled = false
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
-const SPEED = 125;
+const SPEED = 150;
 
 const input = new Input(canvas);
 const camera = new Camera(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -59,28 +59,28 @@ const idleAnimRight = new SpriteAnimation({
 
 const runAnimDown = new SpriteAnimation({
     frames: [4, 5, 4, 0, 6, 7, 6],
-    duration: 0.5,
+    duration: 0.1,
     playing: true,
     loop: true
 })
 
 const runAnimUp = new SpriteAnimation({
     frames: [12, 13, 12, 8, 14, 15, 14],
-    duration: 0.5,
+    duration: 0.1,
     playing: true,
     loop: true
 })
 
 const runAnimLeft = new SpriteAnimation({
     frames: [28, 29, 28, 24, 30, 31, 30],
-    duration: 0.5,
+    duration: 0.1,
     playing: true,
     loop: true
 })
 
 const runAnimRight = new SpriteAnimation({
     frames: [20, 21, 20, 16, 22, 23, 22],
-    duration: 0.5,
+    duration: 0.1,
     playing: true,
     loop: true
 })
@@ -96,18 +96,18 @@ function Update(deltaTime){
     if (input.keys_pressed.includes("KeyS")) direction.y += 1;
 
     if (direction.equalsTo(Vector2.ZERO)){
-        //if (player.velocity.y > 0) player.setAnimation(idleAnimDown);
-        //else if (player.velocity.y < 0) player.setAnimation(idleAnimUp);
-        //else if (player.velocity.x > 0) player.setAnimation(idleAnimRight);
-        //else if (player.velocity.x < 0) player.setAnimation(idleAnimLeft);
+        if (player.velocity.y > 0) player.setAnimation(idleAnimDown);
+        else if (player.velocity.y < 0) player.setAnimation(idleAnimUp);
+        else if (player.velocity.x > 0) player.setAnimation(idleAnimRight);
+        else if (player.velocity.x < 0) player.setAnimation(idleAnimLeft);
 
-        if (Math.abs(lookingDirection.y) > Math.abs(lookingDirection.x)){
-            if (lookingDirection.y > 0) player.setAnimation(idleAnimDown);
-            else player.setAnimation(idleAnimUp);
-        }else{
-            if (lookingDirection.x > 0) player.setAnimation(idleAnimRight);
-            else player.setAnimation(idleAnimLeft);
-        }
+        //if (Math.abs(lookingDirection.y) > Math.abs(lookingDirection.x)){
+        //    if (lookingDirection.y > 0) player.setAnimation(idleAnimDown);
+        //    else player.setAnimation(idleAnimUp);
+        //}else{
+        //    if (lookingDirection.x > 0) player.setAnimation(idleAnimRight);
+        //    else player.setAnimation(idleAnimLeft);
+        //}
 
         player.position = new Vector2(Math.round(player.position.x), Math.round(player.position.y));
     }else{

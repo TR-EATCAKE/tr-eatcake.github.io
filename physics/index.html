@@ -4,40 +4,21 @@
 		<title>Simulation</title>
 		<link rel="icon", href="../icon.png">
 		<style>
-			body {
+			body{
 				background-color: rgb(20, 20, 20);
 			}
-			p {
+			p{
 				color: white;
 				font-family: Arial, Helvetica, sans-serif;
 				font-size:16px;
 			}
-			canvas {
+			canvas{
 				position: absolute;
 				left:35px;
 				border: 3px solid white;
 				border-radius: 10px;
 			}
-			.b1 {
-				position: relative;
-				font-size: 20px;
-				font-family: Arial, Helvetica, sans-serif;
-				width: 200px;
-				height:60px;
-				background-color: rgb(21, 156, 21);
-				color:white;
-				border: 3px solid rgb(9, 109, 9);
-				border-radius: 10px;
-				box-shadow: 0px 5px rgb(9, 109, 9);
-				cursor: pointer;
-			}
-			.b1:hover {
-				background-color: rgb(21, 145, 21);
-			}
-			.b1:active {
-				background-color: rgb(9, 109, 9);
-			}
-			.anasayfabtn {
+			.mainmenu {
 				position:absolute;
 				top: 10px;
         		width: 18px;
@@ -48,44 +29,68 @@
         		outline: none;
         		cursor: pointer;
     		}
-			.d1 {
+			.windowGroup {
 				position: absolute;
+				border-radius: 10px;
 				padding: 10px;
+			}
+			.window {
+				position: relative;
+				padding: 8px;
 				border:3px solid white;
 				border-radius: 10px;
 				background-color: black;
 			}
-			.numinput {
-				width:50px;
-			}
-			.colorinput {
-				width:25px;
-				height:25px;
-			}
-			.rangeinput {
-				width: 200px;
-			}
-			#singlespawndiv {
-				width:200px;
-				height:370px;
-				left:850px;
-			}
-			#multiplespawndiv {
-				width:200px;
-				height:370px;
-				left:1085px;
-			}
-			#mainbuttonsdiv {
-				left:850px;
-				top:410px;
-				width:435px;
-				height:140px;
+			.toggle {
+				background: None;
+				border: none;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: larger;
+				color: white;
+				cursor: pointer;
 			}
 		</style>
 	</head>
 	<body>
-		<a href="http://tr-eatcake.github.io"><button class="anasayfabtn"></button></a>
-		<canvas id="canvas", width="1400", height="600"></canvas>
+		<a href="http://tr-eatcake.github.io"><button class="mainmenu"></button></a>
+		<canvas id="canvas", width="1000", height="600"></canvas>
+
+
+		<div class="windowGroup", style="left:1050px; right: 80px; top:-2px;">
+			<div id="infoDiv", class="window">
+				<p style="text-align: center; font-size: larger;"><b>Physics Simulation</b></p>
+				<p>Press C for Circle, R for Rectangle.</p>
+				<p>Press S to change body type to Dynamic / Static.</p>
+				<p>Press + / - to adjust mass.</p>
+				<p>Use Arrow Keys to adjust size.</p>
+			</div>
+			<br>
+			<div id="objectInfo", class="window">
+				<button id="debugButton", class="toggle", onclick="document.getElementById('objectInfoContent').hidden = !document.getElementById('objectInfoContent').hidden;">
+					<b>Object Spawner Info</b>
+				</button>
+				<div id="objectInfoContent", hidden="true">
+					<p><b>Shape: </b><span id="objectShape">None</span></p>
+					<p><b>Mass: </b><span id="objectMass">None</span></p>
+					<p><b>Body Type: </b><span id="objectBodyType">None</span></p>
+				</div>
+			</div>
+			<br>
+			<div id="debugDiv", class="window">
+				<button id="debugButton", class="toggle", onclick="document.getElementById('debugContent').hidden = !document.getElementById('debugContent').hidden;">
+					<b>Debug</b>
+				</button>
+				<div id="debugContent", hidden="true">
+					<p><b>FPS: </b><span id="fps">0</span></p>
+					<p><b>Mouse Position: </b><span id="mouse">0</span></p>
+					<p><b>Object Count: </b><span id="objectCount">0</span></p>
+					<p><b>Total Kinetic Energy: </b><span id="totalKineticEnergy">0</span></p>
+					<p><b>Total Potential Energy: </b><span id="totalPotentialEnergy">0</span></p>
+					<p><b>Total Energy: </b><span id="totalEnergy">0</span></p>
+				</div>
+			</div>
+		</div>
+
 		<script src="./index.js", type="module"></script>
 	</body>
 </html>

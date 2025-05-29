@@ -3,9 +3,15 @@ export class Vector2 {
         this.x = x;
         this.y = y;
     }
+
+    get copy(){
+        return new Vector2(this.x, this.y);
+    }
+
     get magnitude() {
         return Math.hypot(this.x, this.y);
     }
+    
     set magnitude(newLength) {
         this.x *= newLength/length;
         this.y *= newLength/length;
